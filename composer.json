@@ -1,0 +1,20 @@
+{
+    "name": "mjhosawa/modeling-test",
+    "description": "A coding challenge to parse the JSON into MySQL query",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MJ\\ModelingTest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohammed Jhosawa",
+            "email": "tinker4772@gmail.com"
+        }
+    ],
+    "require": {
+        "rutek/dataclass": "^0.0.2"
+    }
+    
+}
