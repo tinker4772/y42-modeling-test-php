@@ -40,7 +40,9 @@ class Filter extends Base
                 $query .= " {$joinOperator} ";
             }
 
-            $query .= "{$field} {$values['operator']} {$values['value']}";
+            if (isset($values['operator']) && isset($values['value'])) {
+                $query .= "{$field} {$values['operator']} {$values['value']}";
+            }
         }
 
         return trim($query);

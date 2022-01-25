@@ -33,13 +33,15 @@ class Sort extends Base
         return $fields;
     }
 
-    public function orderByClause()
+    public function orderByClause(): string
     {
         $query = "";
         $list = $this->transform_object;
 
         foreach ($list as $values) {
-            $query .= "{$values['target']} {$values['order']} ";
+            if (isset($values['target']) && isset($values['order'])) {
+                $query .= "{$values['target']} {$values['order']} ";
+            }
         }
 
         return trim($query);

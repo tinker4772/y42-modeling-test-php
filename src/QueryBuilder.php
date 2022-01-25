@@ -3,8 +3,6 @@
 namespace MJ\ModelingTest;
 
 use MJ\ModelingTest\NodeModel;
-use ReflectionClass;
-use function Rutek\Dataclass\transform;
 
 class QueryBuilder
 {

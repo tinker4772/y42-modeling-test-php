@@ -14,12 +14,12 @@ class Input extends Base
         $this->input = $transformer;
     }
 
-    public function getColumns()
+    public function getColumns(): string
     {
         return implode(", ", $this->transform_object->fields);
     }
 
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->transform_object->tableName;
     }

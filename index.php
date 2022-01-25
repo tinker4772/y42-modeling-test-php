@@ -9,5 +9,3 @@ $jsonObject = json_decode(file_get_contents($json), true);
 
 $builder = new QueryBuilder($jsonObject);
 $builder->build();
-
-

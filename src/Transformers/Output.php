@@ -2,20 +2,39 @@
 
 namespace MJ\ModelingTest\Transformers;
 
+use MJ\ModelingTest\Transformers\TransformObjects\Output as TransformObjectsOutput;
+
 class Output extends Base
 {
-    public function transform()
+    public function __construct($key, $type, TransformObjectsOutput $transformObject, Base $transformer)
     {
-        //
-    }
-
-    public function getParams()
-    {
-        //
+        $this->key = $key;
+        $this->type = $type;
+        $this->transform_object = $transformObject;
+        $this->input = $transformer;
     }
 
     public function fields()
     {
-        //
+        return $this->input->fields();
+    }
+
+    public function limitClause(): string
+    {
+        $offset = $this->transform_object->offset;
+        $limit = $this->transform_object->limit;
+        $query = "{$offset}, {$limit}";
+
+        return $query;
+    }
+
+    public function transform()
+    {
+        $sql = $this->input->transform();
+        $limit = " LIMIT " . $this->limitClause();
+
+        $query = $sql . $limit;
+
+        return trim($query);
     }
 }
