@@ -2,7 +2,6 @@
 
 namespace MJ\ModelingTest\Transformers;
 
-use MJ\ModelingTest\Helper;
 use MJ\ModelingTest\Transformers\TransformObjects\Text as TransformObjectsText;
 
 class Text extends Base
@@ -43,7 +42,7 @@ class Text extends Base
         foreach ($list as $key => $values) {
             if (isset($values['transformation']) && isset($values['column'])) {
                 $key = array_search($values['column'], $fields);
-                $stmt = "{$values['transformation']} ({$values['column']}) as {$values['column']}";
+                $stmt = "{$values['transformation']} (`{$values['column']}`) as `{$values['column']}`";
                 unset($fields[$key]);
                 array_push($fields, $stmt);
             }
@@ -59,13 +58,11 @@ class Text extends Base
             throw new \Exception("{$names} not valid columns");
         }
 
-        $orgSql = $this->input->transform();
-        $clause = Helper::getFromString($orgSql);
-
+        $edge = $this->input->key;
         $transformation = $this->columnTransformation();
 
-        $query = "SELECT {$transformation} FROM " . $clause;
+        $query = "SELECT {$transformation} FROM `{$edge}`";
 
-        return trim($query);
+        return $query;
     }
 }

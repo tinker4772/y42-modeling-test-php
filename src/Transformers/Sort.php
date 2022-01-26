@@ -33,18 +33,20 @@ class Sort extends Base
         return $fields;
     }
 
-    public function orderByClause(): string
+    public function orderByClause(): ?string
     {
-        $query = "";
+        $order = [];
         $list = $this->transform_object;
 
         foreach ($list as $values) {
             if (isset($values['target']) && isset($values['order'])) {
-                $query .= "{$values['target']} {$values['order']} ";
+                $order[] = "{$values['target']} {$values['order']}";
             }
         }
 
-        return trim($query);
+        $query = implode(",", $order);
+
+        return $query;
     }
 
     public function transform()
@@ -54,9 +56,11 @@ class Sort extends Base
             throw new \Exception("{$names} not valid columns");
         }
 
-        $sql = $this->input->transform();
-        $orderBy = " ORDER BY " . $this->orderByClause();
+        $edge = $this->input->key;
+        $fields = implode("`,`", $this->input->fields());
 
+        $sql = "SELECT `{$fields}` FROM `{$edge}`";
+        $orderBy = " ORDER BY " . $this->orderByClause();
         $query = $sql . $orderBy;
 
         return $query;

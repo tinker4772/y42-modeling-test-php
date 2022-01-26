@@ -14,28 +14,23 @@ class Input extends Base
         $this->input = $transformer;
     }
 
-    public function getColumns(): string
-    {
-        return implode(", ", $this->transform_object->fields);
-    }
-
     public function getTableName(): string
     {
         return $this->transform_object->tableName;
     }
 
-    public function fields()
+    public function fields(): array
     {
         return $this->transform_object->fields;
     }
 
-    public function transform()
+    public function transform(): string
     {
-        $cols = $this->getColumns();
         $tableName = $this->getTableName();
+        $fields = implode("`,`", $this->transform_object->fields);
 
-        $query = "SELECT {$cols} FROM {$tableName}";
+        $query = "SELECT `{$fields}` FROM `{$tableName}`";
 
-        return trim($query);
+        return $query;
     }
 }

@@ -48,15 +48,17 @@ class Filter extends Base
         return trim($query);
     }
 
-    public function transform()
+    public function transform(): string
     {
         if (!$this->isValidField()) {
             throw new \Exception(" {$this->transform_object->variable_field_name} is not valid column name");
         }
 
-        $sql = $this->input->transform();
-        $where = " WHERE " . $this->whereClause();
+        $edge = $this->input->key;
+        $fields = implode("`,`", $this->input->fields());
 
+        $sql = "SELECT `{$fields}` FROM `{$edge}`";
+        $where = " WHERE " . $this->whereClause();
         $query = $sql . $where;
 
         return $query;

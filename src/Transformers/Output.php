@@ -30,11 +30,13 @@ class Output extends Base
 
     public function transform()
     {
-        $sql = $this->input->transform();
+        $edge = $this->input->key;
+
+        $sql = "SELECT * FROM `{$edge}`";
         $limit = " LIMIT " . $this->limitClause();
 
         $query = $sql . $limit;
 
-        return trim($query);
+        return $query;
     }
 }
